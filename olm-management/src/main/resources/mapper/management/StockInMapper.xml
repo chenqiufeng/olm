@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.olm.management.mapper.StockInMapper">
+    
+    <resultMap type="StockIn" id="StockInResult">
+        <result property="id"    column="id"    />
+        <result property="operator"    column="operator"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="granaryId"    column="granary_id"    />
+        <result property="grainDepotId"    column="grain_depot_id"    />
+        <result property="ownerGoods"    column="owner_goods"    />
+        <result property="goodsType"    column="goods_type"    />
+        <result property="carId"    column="car_id"    />
+        <result property="firstPound"    column="first_pound"    />
+        <result property="secondPound"    column="second_pound"    />
+        <result property="netWeight"    column="net_weight"    />
+        <result property="unitWeight"    column="unit_weight"    />
+        <result property="moistureContent"    column="moisture_content"    />
+        <result property="mildewPer"    column="mildew_per"    />
+        <result property="impurity"    column="impurity"    />
+        <result property="unsoundKernel"    column="unsound_kernel"    />
+        <result property="colorAndOdor"    column="color_and_odor"    />
+        <result property="firstPoundTime"    column="first_pound_time"    />
+        <result property="secondPoundTime"    column="second_pound_time"    />
+        <result property="orderTime"    column="order_time"    />
+        <result property="deductionDeduction"    column="deduction_deduction"    />
+        <result property="inDbInt"    column="in_db_INT"    />
+        <result property="deduction"    column="deduction"    />
+        <result property="qualityWorker"    column="quality_worker"    />
+        <result property="firstPoundWorker"    column="first_pound_worker"    />
+        <result property="secondPoundWorker"    column="second_pound_worker"    />
+        <result property="agreementId"    column="agreement_id"    />
+        <result property="registerNumber"    column="register_number"    />
+        <result property="status"    column="status"    />
+        <result property="other"    column="other"    />
+    </resultMap>
+
+    <sql id="selectStockInVo">
+        select id, operator, order_id, granary_id, grain_depot_id, owner_goods, goods_type, car_id, first_pound, second_pound, net_weight, unit_weight, moisture_content, mildew_per, impurity, unsound_kernel, color_and_odor, first_pound_time, second_pound_time, order_time, deduction_deduction, in_db_INT, deduction, quality_worker, first_pound_worker, second_pound_worker, agreement_id, register_number, status, other from t_in_db
+    </sql>
+
+    <select id="selectStockInList" parameterType="StockIn" resultMap="StockInResult">
+        <include refid="selectStockInVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectStockInById" parameterType="Long" resultMap="StockInResult">
+        <include refid="selectStockInVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStockIn" parameterType="StockIn" useGeneratedKeys="true" keyProperty="id">
+        insert into t_in_db
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="operator != null and operator != ''">operator,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="granaryId != null">granary_id,</if>
+            <if test="grainDepotId != null">grain_depot_id,</if>
+            <if test="ownerGoods != null">owner_goods,</if>
+            <if test="goodsType != null and goodsType != ''">goods_type,</if>
+            <if test="carId != null">car_id,</if>
+            <if test="firstPound != null">first_pound,</if>
+            <if test="secondPound != null">second_pound,</if>
+            <if test="netWeight != null">net_weight,</if>
+            <if test="unitWeight != null">unit_weight,</if>
+            <if test="moistureContent != null">moisture_content,</if>
+            <if test="mildewPer != null">mildew_per,</if>
+            <if test="impurity != null">impurity,</if>
+            <if test="unsoundKernel != null">unsound_kernel,</if>
+            <if test="colorAndOdor != null">color_and_odor,</if>
+            <if test="firstPoundTime != null">first_pound_time,</if>
+            <if test="secondPoundTime != null">second_pound_time,</if>
+            <if test="orderTime != null">order_time,</if>
+            <if test="deductionDeduction != null">deduction_deduction,</if>
+            <if test="inDbInt != null">in_db_INT,</if>
+            <if test="deduction != null">deduction,</if>
+            <if test="qualityWorker != null">quality_worker,</if>
+            <if test="firstPoundWorker != null">first_pound_worker,</if>
+            <if test="secondPoundWorker != null">second_pound_worker,</if>
+            <if test="agreementId != null">agreement_id,</if>
+            <if test="registerNumber != null and registerNumber != ''">register_number,</if>
+            <if test="status != null">status,</if>
+            <if test="other != null">other,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="operator != null and operator != ''">#{operator},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="granaryId != null">#{granaryId},</if>
+            <if test="grainDepotId != null">#{grainDepotId},</if>
+            <if test="ownerGoods != null">#{ownerGoods},</if>
+            <if test="goodsType != null and goodsType != ''">#{goodsType},</if>
+            <if test="carId != null">#{carId},</if>
+            <if test="firstPound != null">#{firstPound},</if>
+            <if test="secondPound != null">#{secondPound},</if>
+            <if test="netWeight != null">#{netWeight},</if>
+            <if test="unitWeight != null">#{unitWeight},</if>
+            <if test="moistureContent != null">#{moistureContent},</if>
+            <if test="mildewPer != null">#{mildewPer},</if>
+            <if test="impurity != null">#{impurity},</if>
+            <if test="unsoundKernel != null">#{unsoundKernel},</if>
+            <if test="colorAndOdor != null">#{colorAndOdor},</if>
+            <if test="firstPoundTime != null">#{firstPoundTime},</if>
+            <if test="secondPoundTime != null">#{secondPoundTime},</if>
+            <if test="orderTime != null">#{orderTime},</if>
+            <if test="deductionDeduction != null">#{deductionDeduction},</if>
+            <if test="inDbInt != null">#{inDbInt},</if>
+            <if test="deduction != null">#{deduction},</if>
+            <if test="qualityWorker != null">#{qualityWorker},</if>
+            <if test="firstPoundWorker != null">#{firstPoundWorker},</if>
+            <if test="secondPoundWorker != null">#{secondPoundWorker},</if>
+            <if test="agreementId != null">#{agreementId},</if>
+            <if test="registerNumber != null and registerNumber != ''">#{registerNumber},</if>
+            <if test="status != null">#{status},</if>
+            <if test="other != null">#{other},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStockIn" parameterType="StockIn">
+        update t_in_db
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="operator != null and operator != ''">operator = #{operator},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="granaryId != null">granary_id = #{granaryId},</if>
+            <if test="grainDepotId != null">grain_depot_id = #{grainDepotId},</if>
+            <if test="ownerGoods != null">owner_goods = #{ownerGoods},</if>
+            <if test="goodsType != null and goodsType != ''">goods_type = #{goodsType},</if>
+            <if test="carId != null">car_id = #{carId},</if>
+            <if test="firstPound != null">first_pound = #{firstPound},</if>
+            <if test="secondPound != null">second_pound = #{secondPound},</if>
+            <if test="netWeight != null">net_weight = #{netWeight},</if>
+            <if test="unitWeight != null">unit_weight = #{unitWeight},</if>
+            <if test="moistureContent != null">moisture_content = #{moistureContent},</if>
+            <if test="mildewPer != null">mildew_per = #{mildewPer},</if>
+            <if test="impurity != null">impurity = #{impurity},</if>
+            <if test="unsoundKernel != null">unsound_kernel = #{unsoundKernel},</if>
+            <if test="colorAndOdor != null">color_and_odor = #{colorAndOdor},</if>
+            <if test="firstPoundTime != null">first_pound_time = #{firstPoundTime},</if>
+            <if test="secondPoundTime != null">second_pound_time = #{secondPoundTime},</if>
+            <if test="orderTime != null">order_time = #{orderTime},</if>
+            <if test="deductionDeduction != null">deduction_deduction = #{deductionDeduction},</if>
+            <if test="inDbInt != null">in_db_INT = #{inDbInt},</if>
+            <if test="deduction != null">deduction = #{deduction},</if>
+            <if test="qualityWorker != null">quality_worker = #{qualityWorker},</if>
+            <if test="firstPoundWorker != null">first_pound_worker = #{firstPoundWorker},</if>
+            <if test="secondPoundWorker != null">second_pound_worker = #{secondPoundWorker},</if>
+            <if test="agreementId != null">agreement_id = #{agreementId},</if>
+            <if test="registerNumber != null and registerNumber != ''">register_number = #{registerNumber},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="other != null">other = #{other},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStockInById" parameterType="Long">
+        delete from t_in_db where id = #{id}
+    </delete>
+
+    <delete id="deleteStockInByIds" parameterType="String">
+        delete from t_in_db where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

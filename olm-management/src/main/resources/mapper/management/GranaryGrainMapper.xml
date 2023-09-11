@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.olm.management.mapper.GranaryGrainMapper">
+    
+    <resultMap type="GranaryGrain" id="GranaryGrainResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="parentId"    column="parent_id"    />
+    </resultMap>
+
+    <sql id="selectGranaryGrainVo">
+        select id, name, parent_id from t_granary_grain
+    </sql>
+
+    <select id="selectGranaryGrainList" parameterType="GranaryGrain" resultMap="GranaryGrainResult">
+        <include refid="selectGranaryGrainVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectGranaryGrainById" parameterType="Long" resultMap="GranaryGrainResult">
+        <include refid="selectGranaryGrainVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGranaryGrain" parameterType="GranaryGrain" useGeneratedKeys="true" keyProperty="id">
+        insert into t_granary_grain
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="parentId != null">parent_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="parentId != null">#{parentId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGranaryGrain" parameterType="GranaryGrain">
+        update t_granary_grain
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGranaryGrainById" parameterType="Long">
+        delete from t_granary_grain where id = #{id}
+    </delete>
+
+    <delete id="deleteGranaryGrainByIds" parameterType="String">
+        delete from t_granary_grain where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

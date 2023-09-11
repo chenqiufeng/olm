@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.olm.management.mapper.CustomerMapper">
+    
+    <resultMap type="Customer" id="CustomerResult">
+        <result property="id"    column="id"    />
+        <result property="granaryId"    column="granary_id"    />
+        <result property="grainDepotId"    column="grain_depot_id"    />
+        <result property="company"    column="company"    />
+        <result property="name"    column="name"    />
+        <result property="idcard"    column="idcard"    />
+        <result property="cellphone"    column="cellphone"    />
+        <result property="address"    column="address"    />
+        <result property="accountInt"    column="account_int"    />
+        <result property="totalAmount"    column="total_amount"    />
+        <result property="grainLevel"    column="grain_level"    />
+        <result property="opearator"    column="opearator"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updatedTime"    column="updated_time"    />
+    </resultMap>
+
+    <sql id="selectCustomerVo">
+        select id, granary_id, grain_depot_id, company, name, idcard, cellphone, address, account_int, total_amount, grain_level, opearator, created_time, updated_time from t_customer
+    </sql>
+
+    <select id="selectCustomerList" parameterType="Customer" resultMap="CustomerResult">
+        <include refid="selectCustomerVo"/>
+        <where>  
+            <if test="granaryId != null "> and granary_id = #{granaryId}</if>
+            <if test="grainDepotId != null "> and grain_depot_id = #{grainDepotId}</if>
+            <if test="company != null  and company != ''"> and company = #{company}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="idcard != null  and idcard != ''"> and idcard = #{idcard}</if>
+            <if test="cellphone != null "> and cellphone = #{cellphone}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="accountInt != null  and accountInt != ''"> and account_int = #{accountInt}</if>
+            <if test="totalAmount != null "> and total_amount = #{totalAmount}</if>
+            <if test="grainLevel != null "> and grain_level = #{grainLevel}</if>
+            <if test="opearator != null  and opearator != ''"> and opearator = #{opearator}</if>
+            <if test="createdTime != null "> and created_time = #{createdTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectCustomerById" parameterType="Long" resultMap="CustomerResult">
+        <include refid="selectCustomerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCustomer" parameterType="Customer" useGeneratedKeys="true" keyProperty="id">
+        insert into t_customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="granaryId != null">granary_id,</if>
+            <if test="grainDepotId != null">grain_depot_id,</if>
+            <if test="company != null and company != ''">company,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="idcard != null and idcard != ''">idcard,</if>
+            <if test="cellphone != null">cellphone,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="accountInt != null and accountInt != ''">account_int,</if>
+            <if test="totalAmount != null">total_amount,</if>
+            <if test="grainLevel != null">grain_level,</if>
+            <if test="opearator != null">opearator,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updatedTime != null">updated_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="granaryId != null">#{granaryId},</if>
+            <if test="grainDepotId != null">#{grainDepotId},</if>
+            <if test="company != null and company != ''">#{company},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="idcard != null and idcard != ''">#{idcard},</if>
+            <if test="cellphone != null">#{cellphone},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="accountInt != null and accountInt != ''">#{accountInt},</if>
+            <if test="totalAmount != null">#{totalAmount},</if>
+            <if test="grainLevel != null">#{grainLevel},</if>
+            <if test="opearator != null">#{opearator},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCustomer" parameterType="Customer">
+        update t_customer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="granaryId != null">granary_id = #{granaryId},</if>
+            <if test="grainDepotId != null">grain_depot_id = #{grainDepotId},</if>
+            <if test="company != null and company != ''">company = #{company},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="idcard != null and idcard != ''">idcard = #{idcard},</if>
+            <if test="cellphone != null">cellphone = #{cellphone},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="accountInt != null and accountInt != ''">account_int = #{accountInt},</if>
+            <if test="totalAmount != null">total_amount = #{totalAmount},</if>
+            <if test="grainLevel != null">grain_level = #{grainLevel},</if>
+            <if test="opearator != null">opearator = #{opearator},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCustomerById" parameterType="Long">
+        delete from t_customer where id = #{id}
+    </delete>
+
+    <delete id="deleteCustomerByIds" parameterType="String">
+        delete from t_customer where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

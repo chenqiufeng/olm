@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.olm.management.mapper.OrderMapper">
+    
+    <resultMap type="Order" id="OrderResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderTime"    column="order_time"    />
+        <result property="granaryId"    column="granary_id"    />
+        <result property="grainDepotId"    column="grain_depot_id"    />
+        <result property="operateId"    column="operate_id"    />
+        <result property="goodsType"    column="goods_type"    />
+        <result property="inDbInt"    column="in_db_INT"    />
+    </resultMap>
+
+    <sql id="selectOrderVo">
+        select id, order_id, order_time, granary_id, grain_depot_id, operate_id, goods_type, in_db_INT from t_order
+    </sql>
+
+    <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        <where>  
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderTime != null "> and order_time = #{orderTime}</if>
+            <if test="granaryId != null "> and granary_id = #{granaryId}</if>
+            <if test="grainDepotId != null "> and grain_depot_id = #{grainDepotId}</if>
+            <if test="operateId != null  and operateId != ''"> and operate_id = #{operateId}</if>
+            <if test="goodsType != null  and goodsType != ''"> and goods_type = #{goodsType}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderById" parameterType="Long" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrder" parameterType="Order">
+        insert into t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null and orderId != ''">order_id,</if>
+            <if test="orderTime != null">order_time,</if>
+            <if test="granaryId != null">granary_id,</if>
+            <if test="grainDepotId != null">grain_depot_id,</if>
+            <if test="operateId != null and operateId != ''">operate_id,</if>
+            <if test="goodsType != null and goodsType != ''">goods_type,</if>
+            <if test="inDbInt != null">in_db_INT,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orderId != null and orderId != ''">#{orderId},</if>
+            <if test="orderTime != null">#{orderTime},</if>
+            <if test="granaryId != null">#{granaryId},</if>
+            <if test="grainDepotId != null">#{grainDepotId},</if>
+            <if test="operateId != null and operateId != ''">#{operateId},</if>
+            <if test="goodsType != null and goodsType != ''">#{goodsType},</if>
+            <if test="inDbInt != null">#{inDbInt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrder" parameterType="Order">
+        update t_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null and orderId != ''">order_id = #{orderId},</if>
+            <if test="orderTime != null">order_time = #{orderTime},</if>
+            <if test="granaryId != null">granary_id = #{granaryId},</if>
+            <if test="grainDepotId != null">grain_depot_id = #{grainDepotId},</if>
+            <if test="operateId != null and operateId != ''">operate_id = #{operateId},</if>
+            <if test="goodsType != null and goodsType != ''">goods_type = #{goodsType},</if>
+            <if test="inDbInt != null">in_db_INT = #{inDbInt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderById" parameterType="Long">
+        delete from t_order where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderByIds" parameterType="String">
+        delete from t_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

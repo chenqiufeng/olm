@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.olm.management.mapper.StockOutMapper">
+    
+    <resultMap type="StockOut" id="StockOutResult">
+        <result property="id"    column="id"    />
+        <result property="operator"    column="operator"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="granaryId"    column="granary_id"    />
+        <result property="grainDepotId"    column="grain_depot_id"    />
+        <result property="ownerGoods"    column="owner_goods"    />
+        <result property="type"    column="type"    />
+        <result property="carId"    column="car_id"    />
+        <result property="firstPound"    column="first_pound"    />
+        <result property="secondPound"    column="second_pound"    />
+        <result property="netWeight"    column="net_weight"    />
+        <result property="firstPoundTime"    column="first_pound_time"    />
+        <result property="secondPoundTime"    column="second_pound_time"    />
+        <result property="orderTime"    column="order_time"    />
+        <result property="outDbInt"    column="out_db_INT"    />
+        <result property="outDbWorker"    column="out_db_worker"    />
+        <result property="firstPoundWorker"    column="first_pound_worker"    />
+        <result property="secondPoundWorker"    column="second_pound_worker"    />
+        <result property="agreementId"    column="agreement_id"    />
+        <result property="status"    column="status"    />
+        <result property="qualityLevel"    column="quality_level"    />
+        <result property="other"    column="other"    />
+        <result property="time"    column="time"    />
+    </resultMap>
+
+    <sql id="selectStockOutVo">
+        select id, operator, order_id, granary_id, grain_depot_id, owner_goods, type, car_id, first_pound, second_pound, net_weight, first_pound_time, second_pound_time, order_time, out_db_INT, out_db_worker, first_pound_worker, second_pound_worker, agreement_id, status, quality_level, other, time from t_out_db
+    </sql>
+
+    <select id="selectStockOutList" parameterType="StockOut" resultMap="StockOutResult">
+        <include refid="selectStockOutVo"/>
+        <where>  
+            <if test="operator != null  and operator != ''"> and operator = #{operator}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="granaryId != null "> and granary_id = #{granaryId}</if>
+            <if test="grainDepotId != null "> and grain_depot_id = #{grainDepotId}</if>
+            <if test="ownerGoods != null  and ownerGoods != ''"> and owner_goods = #{ownerGoods}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="carId != null  and carId != ''"> and car_id = #{carId}</if>
+            <if test="firstPound != null "> and first_pound = #{firstPound}</if>
+            <if test="secondPound != null "> and second_pound = #{secondPound}</if>
+            <if test="netWeight != null "> and net_weight = #{netWeight}</if>
+            <if test="firstPoundTime != null "> and first_pound_time = #{firstPoundTime}</if>
+            <if test="secondPoundTime != null "> and second_pound_time = #{secondPoundTime}</if>
+            <if test="orderTime != null "> and order_time = #{orderTime}</if>
+            <if test="outDbInt != null "> and out_db_INT = #{outDbInt}</if>
+            <if test="outDbWorker != null  and outDbWorker != ''"> and out_db_worker = #{outDbWorker}</if>
+            <if test="firstPoundWorker != null  and firstPoundWorker != ''"> and first_pound_worker = #{firstPoundWorker}</if>
+            <if test="secondPoundWorker != null  and secondPoundWorker != ''"> and second_pound_worker = #{secondPoundWorker}</if>
+            <if test="agreementId != null  and agreementId != ''"> and agreement_id = #{agreementId}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="qualityLevel != null "> and quality_level = #{qualityLevel}</if>
+            <if test="other != null  and other != ''"> and other = #{other}</if>
+            <if test="time != null "> and time = #{time}</if>
+        </where>
+    </select>
+    
+    <select id="selectStockOutById" parameterType="Long" resultMap="StockOutResult">
+        <include refid="selectStockOutVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStockOut" parameterType="StockOut" useGeneratedKeys="true" keyProperty="id">
+        insert into t_out_db
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="operator != null and operator != ''">operator,</if>
+            <if test="orderId != null and orderId != ''">order_id,</if>
+            <if test="granaryId != null">granary_id,</if>
+            <if test="grainDepotId != null">grain_depot_id,</if>
+            <if test="ownerGoods != null">owner_goods,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="carId != null and carId != ''">car_id,</if>
+            <if test="firstPound != null">first_pound,</if>
+            <if test="secondPound != null">second_pound,</if>
+            <if test="netWeight != null">net_weight,</if>
+            <if test="firstPoundTime != null">first_pound_time,</if>
+            <if test="secondPoundTime != null">second_pound_time,</if>
+            <if test="orderTime != null">order_time,</if>
+            <if test="outDbInt != null">out_db_INT,</if>
+            <if test="outDbWorker != null">out_db_worker,</if>
+            <if test="firstPoundWorker != null">first_pound_worker,</if>
+            <if test="secondPoundWorker != null">second_pound_worker,</if>
+            <if test="agreementId != null">agreement_id,</if>
+            <if test="status != null">status,</if>
+            <if test="qualityLevel != null">quality_level,</if>
+            <if test="other != null">other,</if>
+            <if test="time != null">time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="operator != null and operator != ''">#{operator},</if>
+            <if test="orderId != null and orderId != ''">#{orderId},</if>
+            <if test="granaryId != null">#{granaryId},</if>
+            <if test="grainDepotId != null">#{grainDepotId},</if>
+            <if test="ownerGoods != null">#{ownerGoods},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="carId != null and carId != ''">#{carId},</if>
+            <if test="firstPound != null">#{firstPound},</if>
+            <if test="secondPound != null">#{secondPound},</if>
+            <if test="netWeight != null">#{netWeight},</if>
+            <if test="firstPoundTime != null">#{firstPoundTime},</if>
+            <if test="secondPoundTime != null">#{secondPoundTime},</if>
+            <if test="orderTime != null">#{orderTime},</if>
+            <if test="outDbInt != null">#{outDbInt},</if>
+            <if test="outDbWorker != null">#{outDbWorker},</if>
+            <if test="firstPoundWorker != null">#{firstPoundWorker},</if>
+            <if test="secondPoundWorker != null">#{secondPoundWorker},</if>
+            <if test="agreementId != null">#{agreementId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="qualityLevel != null">#{qualityLevel},</if>
+            <if test="other != null">#{other},</if>
+            <if test="time != null">#{time},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStockOut" parameterType="StockOut">
+        update t_out_db
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="operator != null and operator != ''">operator = #{operator},</if>
+            <if test="orderId != null and orderId != ''">order_id = #{orderId},</if>
+            <if test="granaryId != null">granary_id = #{granaryId},</if>
+            <if test="grainDepotId != null">grain_depot_id = #{grainDepotId},</if>
+            <if test="ownerGoods != null">owner_goods = #{ownerGoods},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="carId != null and carId != ''">car_id = #{carId},</if>
+            <if test="firstPound != null">first_pound = #{firstPound},</if>
+            <if test="secondPound != null">second_pound = #{secondPound},</if>
+            <if test="netWeight != null">net_weight = #{netWeight},</if>
+            <if test="firstPoundTime != null">first_pound_time = #{firstPoundTime},</if>
+            <if test="secondPoundTime != null">second_pound_time = #{secondPoundTime},</if>
+            <if test="orderTime != null">order_time = #{orderTime},</if>
+            <if test="outDbInt != null">out_db_INT = #{outDbInt},</if>
+            <if test="outDbWorker != null">out_db_worker = #{outDbWorker},</if>
+            <if test="firstPoundWorker != null">first_pound_worker = #{firstPoundWorker},</if>
+            <if test="secondPoundWorker != null">second_pound_worker = #{secondPoundWorker},</if>
+            <if test="agreementId != null">agreement_id = #{agreementId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="qualityLevel != null">quality_level = #{qualityLevel},</if>
+            <if test="other != null">other = #{other},</if>
+            <if test="time != null">time = #{time},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStockOutById" parameterType="Long">
+        delete from t_out_db where id = #{id}
+    </delete>
+
+    <delete id="deleteStockOutByIds" parameterType="String">
+        delete from t_out_db where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
