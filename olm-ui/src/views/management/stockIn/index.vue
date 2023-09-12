@@ -81,17 +81,6 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['management:stockIn:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
           type="warning"
           plain
           icon="el-icon-download"
@@ -105,7 +94,6 @@
     </el-row>
 
     <el-table v-loading="loading" :data="stockInList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="订单编号" align="center" prop="orderId" />
       <el-table-column label="粮库" align="center" prop="grainDepotName"/>
       <el-table-column label="粮仓" align="center" prop="granaryName" />
@@ -343,9 +331,9 @@ export default {
       total: 0,
       // 入库表格数据
       stockInList: [],
-      // 粮库
-      granaryList:[],
       // 粮仓
+      granaryList:[],
+      // 粮库
       grainList:[],
       deptOptions: undefined,
       firstPoundStatus: true,
@@ -377,36 +365,36 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        orderId: [
-          { required: true, message: "订单编号不能为空", trigger: "blur" }
-        ],
-        granaryId: [
-          { required: true, message: "粮仓id不能为空", trigger: "change" }
-        ],
-        grainDepotId: [
-          { required: true, message: "粮库id不能为空", trigger: "change" }
-        ],
-        goodsType: [
-          { required: true, message: "品种不能为空", trigger: "change" }
-        ],
-        firstPound: [
-          { required: true, message: "首磅(kg)不能为空", trigger: "blur" }
-        ],
-        orderTime: [
-          { required: true, message: "订单生成时间不能为空", trigger: "blur" }
-        ],
-        inDbInt: [
-          { required: true, message: "入库量不能为空", trigger: "blur" }
-        ],
-        registerNumber: [
-          { required: true, message: "受理编号不能为空", trigger: "blur" }
-        ],
-        status: [
-          { required: true, message: "状态不能为空", trigger: "change" }
-        ],
-        operator: [
-          { required: true, message: "操作人不能为空", trigger: "blur" }
-        ]
+        // orderId: [
+        //   { required: true, message: "订单编号不能为空", trigger: "blur" }
+        // ],
+        // granaryId: [
+        //   { required: true, message: "粮仓id不能为空", trigger: "change" }
+        // ],
+        // grainDepotId: [
+        //   { required: true, message: "粮库id不能为空", trigger: "change" }
+        // ],
+        // goodsType: [
+        //   { required: true, message: "品种不能为空", trigger: "change" }
+        // ],
+        // firstPound: [
+        //   { required: true, message: "首磅(kg)不能为空", trigger: "blur" }
+        // ],
+        // orderTime: [
+        //   { required: true, message: "订单生成时间不能为空", trigger: "blur" }
+        // ],
+        // inDbInt: [
+        //   { required: true, message: "入库量不能为空", trigger: "blur" }
+        // ],
+        // registerNumber: [
+        //   { required: true, message: "受理编号不能为空", trigger: "blur" }
+        // ],
+        // status: [
+        //   { required: true, message: "状态不能为空", trigger: "change" }
+        // ],
+        // operator: [
+        //   { required: true, message: "操作人不能为空", trigger: "blur" }
+        // ]
       }
     };
   },
@@ -526,6 +514,11 @@ export default {
         this.form = response.data;
         this.open = true;
         this.title = "修改入库";
+        let params = {};
+        params["parentId"] = this.form.grain
+        listGranary(params).then(response => {
+          this.granaryList = response.data
+        });
       });
     },
     /** 提交按钮 */

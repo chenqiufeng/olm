@@ -62,17 +62,17 @@ public class StockOut extends BaseEntity
     private BigDecimal netWeight;
 
     /** 首磅时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "首磅时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date firstPoundTime;
 
     /** 次磅时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "次磅时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date secondPoundTime;
 
     /** 订单生成时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "订单生成时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date orderTime;
 
@@ -96,9 +96,17 @@ public class StockOut extends BaseEntity
     @Excel(name = "合同编号")
     private String agreementId;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     /** 状态 */
     @Excel(name = "状态")
-    private Long status;
+    private String status;
 
     /** 质量级别 */
     @Excel(name = "质量级别")
@@ -109,9 +117,41 @@ public class StockOut extends BaseEntity
     private String other;
 
     /** 记录时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "记录时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date time;
+
+    public Date getCreatedTime() {
+        return CreatedTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        CreatedTime = createdTime;
+    }
+
+    public String getGrainDepotName() {
+        return grainDepotName;
+    }
+
+    public void setGrainDepotName(String grainDepotName) {
+        this.grainDepotName = grainDepotName;
+    }
+
+    @Excel(name = "粮库")
+    private String grainDepotName;
+
+    public String getGranaryName() {
+        return granaryName;
+    }
+
+    public void setGranaryName(String granaryName) {
+        this.granaryName = granaryName;
+    }
+
+    @Excel(name = "粮仓")
+    private String granaryName;
+
+    private Date CreatedTime;
 
     public void setId(Long id) 
     {
@@ -283,15 +323,6 @@ public class StockOut extends BaseEntity
     public String getAgreementId() 
     {
         return agreementId;
-    }
-    public void setStatus(Long status) 
-    {
-        this.status = status;
-    }
-
-    public Long getStatus() 
-    {
-        return status;
     }
     public void setQualityLevel(Long qualityLevel) 
     {

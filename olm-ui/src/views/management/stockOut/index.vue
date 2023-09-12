@@ -1,14 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="工号id" prop="operator">
-        <el-input
-          v-model="queryParams.operator"
-          placeholder="请输入工号id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="订单编号" prop="orderId">
         <el-input
           v-model="queryParams.orderId"
@@ -17,21 +9,25 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="粮仓" prop="granaryId">
-        <el-input
-          v-model="queryParams.granaryId"
-          placeholder="请输入粮仓"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="粮库" prop="granary">
+        <el-select v-model="queryParams.grainId" placeholder="请选择粮库" clearable  @change="handleGranary">
+          <el-option
+            v-for="grain in grainList"
+            :key="grain.id"
+            :label="grain.name"
+            :value="grain.id"
+          />
+        </el-select>
       </el-form-item>
-      <el-form-item label="粮库" prop="grainDepotId">
-        <el-input
-          v-model="queryParams.grainDepotId"
-          placeholder="请输入粮库"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="粮仓" prop="granary">
+        <el-select v-model="queryParams.granaryId" placeholder="请选择粮仓" clearable>
+          <el-option
+            v-for="granary in granaryList"
+            :key="granary.id"
+            :label="granary.name"
+            :value="granary.id"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="货主" prop="ownerGoods">
         <el-input
@@ -41,138 +37,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="品种" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择品种" clearable>
-          <el-option
-            v-for="dict in dict.type.sys_goods_type"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="车牌号码" prop="carId">
-        <el-input
-          v-model="queryParams.carId"
-          placeholder="请输入车牌号码"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="首磅(kg) " prop="firstPound">
-        <el-input
-          v-model="queryParams.firstPound"
-          placeholder="请输入首磅(kg) "
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="次磅(kg)  " prop="secondPound">
-        <el-input
-          v-model="queryParams.secondPound"
-          placeholder="请输入次磅(kg)  "
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="净重(kg)" prop="netWeight">
-        <el-input
-          v-model="queryParams.netWeight"
-          placeholder="请输入净重(kg)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="首磅时间" prop="firstPoundTime">
-        <el-date-picker clearable
-                        v-model="queryParams.firstPoundTime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="请选择首磅时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="次磅时间" prop="secondPoundTime">
-        <el-date-picker clearable
-                        v-model="queryParams.secondPoundTime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="请选择次磅时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="订单生成时间" prop="orderTime">
-        <el-date-picker clearable
-                        v-model="queryParams.orderTime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="请选择订单生成时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="出库量" prop="outDbInt">
-        <el-input
-          v-model="queryParams.outDbInt"
-          placeholder="请输入出库量"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="出库量" prop="outDbWorker">
-        <el-input
-          v-model="queryParams.outDbWorker"
-          placeholder="请输入出库量"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="首磅员" prop="firstPoundWorker">
-        <el-input
-          v-model="queryParams.firstPoundWorker"
-          placeholder="请输入首磅员"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="次磅员" prop="secondPoundWorker">
-        <el-input
-          v-model="queryParams.secondPoundWorker"
-          placeholder="请输入次磅员"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="合同编号" prop="agreementId">
-        <el-input
-          v-model="queryParams.agreementId"
-          placeholder="请输入合同编号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-input
-          v-model="queryParams.status"
-          placeholder="请输入状态"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="质量级别" prop="qualityLevel">
-        <el-select v-model="queryParams.qualityLevel" placeholder="请选择质量级别" clearable>
-          <el-option
-            v-for="dict in dict.type.sys_quality_level"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="记录时间" prop="time">
-        <el-date-picker clearable
-                        v-model="queryParams.time"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="请选择记录时间">
-        </el-date-picker>
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -203,17 +68,6 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['management:stockOut:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
           type="warning"
           plain
           icon="el-icon-download"
@@ -226,54 +80,22 @@
     </el-row>
 
     <el-table v-loading="loading" :data="stockOutList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="工号id" align="center" prop="operator" />
       <el-table-column label="订单编号" align="center" prop="orderId" />
-      <el-table-column label="粮仓" align="center" prop="granaryId" />
-      <el-table-column label="粮库" align="center" prop="grainDepotId" />
+      <el-table-column label="粮库" align="center" prop="grainDepotName" />
+      <el-table-column label="粮仓" align="center" prop="granaryName" />
       <el-table-column label="货主" align="center" prop="ownerGoods" />
-      <el-table-column label="品种" align="center" prop="type">
-          <template slot-scope="scope">
-            <dict-tag :options="dict.type.sys_goods_type" :value="scope.row.type"/>
-          </template>
-      </el-table-column>
-      <el-table-column label="车牌号码" align="center" prop="carId" />
       <el-table-column label="首磅(kg) " align="center" prop="firstPound" />
       <el-table-column label="次磅(kg)  " align="center" prop="secondPound" />
       <el-table-column label="净重(kg)" align="center" prop="netWeight" />
-      <el-table-column label="首磅时间" align="center" prop="firstPoundTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.firstPoundTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="次磅时间" align="center" prop="secondPoundTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.secondPoundTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="订单生成时间" align="center" prop="orderTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.orderTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="出库量" align="center" prop="outDbInt" />
-      <el-table-column label="出库量" align="center" prop="outDbWorker" />
-      <el-table-column label="首磅员" align="center" prop="firstPoundWorker" />
-      <el-table-column label="次磅员" align="center" prop="secondPoundWorker" />
-      <el-table-column label="合同编号" align="center" prop="agreementId" />
-      <el-table-column label="状态" align="center" prop="status" />
-      <el-table-column label="质量级别" align="center" prop="qualityLevel">
+      <el-table-column label="首磅时间" align="center" prop="firstPoundTime" width="180"/>
+      <el-table-column label="次磅时间" align="center" prop="secondPoundTime" width="180"/>
+      <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_quality_level" :value="scope.row.qualityLevel"/>
+          <dict-tag :options="dict.type.out_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="other" />
-      <el-table-column label="记录时间" align="center" prop="time" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.time, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -303,107 +125,104 @@
     />
 
     <!-- 添加或修改出库对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="1200px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="工号id" prop="operator">
-          <el-input v-model="form.operator" placeholder="请输入工号id" />
-        </el-form-item>
-        <el-form-item label="订单编号" prop="orderId">
-          <el-input v-model="form.orderId" placeholder="请输入订单编号" />
-        </el-form-item>
-        <el-form-item label="粮仓" prop="granaryId">
-          <el-input v-model="form.granaryId" placeholder="请输入粮仓" />
-        </el-form-item>
-        <el-form-item label="粮库" prop="grainDepotId">
-          <el-input v-model="form.grainDepotId" placeholder="请输入粮库" />
-        </el-form-item>
-        <el-form-item label="货主" prop="ownerGoods">
-          <el-input v-model="form.ownerGoods" placeholder="请输入货主" />
-        </el-form-item>
-        <el-form-item label="品种" prop="type">
-          <el-select v-model="form.type" placeholder="请选择品种">
-            <el-option
-              v-for="dict in dict.type.sys_goods_type"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="车牌号码" prop="carId">
-          <el-input v-model="form.carId" placeholder="请输入车牌号码" />
-        </el-form-item>
-        <el-form-item label="首磅(kg) " prop="firstPound">
-          <el-input v-model="form.firstPound" placeholder="请输入首磅(kg) " />
-        </el-form-item>
-        <el-form-item label="次磅(kg)  " prop="secondPound">
-          <el-input v-model="form.secondPound" placeholder="请输入次磅(kg)  " />
-        </el-form-item>
-        <el-form-item label="净重(kg)" prop="netWeight">
-          <el-input v-model="form.netWeight" placeholder="请输入净重(kg)" />
-        </el-form-item>
-        <el-form-item label="首磅时间" prop="firstPoundTime">
-          <el-date-picker clearable
-                          v-model="form.firstPoundTime"
-                          type="date"
-                          value-format="yyyy-MM-dd"
-                          placeholder="请选择首磅时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="次磅时间" prop="secondPoundTime">
-          <el-date-picker clearable
-                          v-model="form.secondPoundTime"
-                          type="date"
-                          value-format="yyyy-MM-dd"
-                          placeholder="请选择次磅时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="订单生成时间" prop="orderTime">
-          <el-date-picker clearable
-                          v-model="form.orderTime"
-                          type="date"
-                          value-format="yyyy-MM-dd"
-                          placeholder="请选择订单生成时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="出库量" prop="outDbInt">
-          <el-input v-model="form.outDbInt" placeholder="请输入出库量" />
-        </el-form-item>
-        <el-form-item label="出库量" prop="outDbWorker">
-          <el-input v-model="form.outDbWorker" placeholder="请输入出库量" />
-        </el-form-item>
-        <el-form-item label="首磅员" prop="firstPoundWorker">
-          <el-input v-model="form.firstPoundWorker" placeholder="请输入首磅员" />
-        </el-form-item>
-        <el-form-item label="次磅员" prop="secondPoundWorker">
-          <el-input v-model="form.secondPoundWorker" placeholder="请输入次磅员" />
-        </el-form-item>
-        <el-form-item label="合同编号" prop="agreementId">
-          <el-input v-model="form.agreementId" placeholder="请输入合同编号" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-input v-model="form.status" placeholder="请输入状态" />
-        </el-form-item>
-        <el-form-item label="质量级别" prop="qualityLevel">
-          <el-select v-model="form.qualityLevel" placeholder="请选择质量级别">
-            <el-option
-              v-for="dict in dict.type.sys_quality_level"
-              :key="dict.value"
-              :label="dict.label"
-              :value="parseInt(dict.value)"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="粮库" prop="grainDepotId">
+              <el-select v-model="form.grainDepotId" placeholder="请选择粮库" clearable  @change="handleGranary">
+                <el-option
+                  v-for="grain in grainList"
+                  :key="grain.id"
+                  :label="grain.name"
+                  :value="grain.id"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="粮仓" prop="granaryId">
+              <el-select v-model="form.granaryId" placeholder="请选择粮仓" clearable>
+                <el-option
+                  v-for="granary in granaryList"
+                  :key="granary.id"
+                  :label="granary.name"
+                  :value="granary.id"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="货主" prop="ownerGoods">
+              <el-input v-model="form.ownerGoods" placeholder="请输入货主"  />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="车牌号" prop="carId">
+              <el-input v-model="form.carId" placeholder="请输入车牌号"   />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="首磅" prop="firstPound">
+              <el-input v-model="form.firstPound" placeholder="请输入首磅(kg)" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="次磅  " prop="secondPound">
+              <el-input v-model="form.secondPound" placeholder="请输入次磅(kg)  " />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="净重" prop="netWeight">
+              <el-input v-model="form.netWeight" placeholder="请输入净重(kg)" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="品种" prop="type">
+              <el-select v-model="form.type" placeholder="请选择品种">
+                <el-option
+                  v-for="dict in dict.type.sys_goods_type"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="首磅时间" prop="firstPoundTime">
+              <el-date-picker clearable
+                              v-model="form.firstPoundTime"
+                              type="datetime"
+                              value-format="yyyy-MM-dd HH:mm:ss"
+                              placeholder="请选择次磅时间">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="次磅时间" prop="secondPoundTime">
+              <el-date-picker clearable
+                              v-model="form.secondPoundTime"
+                              type="datetime"
+                              value-format="yyyy-MM-dd HH:mm:ss"
+                              placeholder="请选择次磅时间">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="出库量" prop="outDbInt">
+              <el-input v-model="form.outDbInt" placeholder="请输入出库量" />
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="备注" prop="other">
           <el-input v-model="form.other" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="记录时间" prop="time">
-          <el-date-picker clearable
-                          v-model="form.time"
-                          type="date"
-                          value-format="yyyy-MM-dd"
-                          placeholder="请选择记录时间">
-          </el-date-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -416,10 +235,10 @@
 
 <script>
 import { listStockOut, getStockOut, delStockOut, addStockOut, updateStockOut } from "@/api/management/stockOut";
-
+import {listGranary,listGrain} from "@/api/management/GranaryGrain";
 export default {
   name: "StockOut",
-  dicts: ['sys_goods_type', 'sys_quality_level'],
+  dicts: ['sys_goods_type', 'sys_quality_level', 'out_status'],
   data() {
     return {
       // 遮罩层
@@ -436,6 +255,10 @@ export default {
       total: 0,
       // 出库表格数据
       stockOutList: [],
+      // 粮仓
+      granaryList:[],
+      // 粮库
+      grainList:[],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -465,58 +288,76 @@ export default {
         status: null,
         qualityLevel: null,
         other: null,
-        time: null
+        time: null,
+        granary:null,
+        grain:null,
+        grainId:null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        operator: [
-          { required: true, message: "工号id不能为空", trigger: "blur" }
-        ],
-        orderId: [
-          { required: true, message: "订单编号不能为空", trigger: "blur" }
-        ],
-        granaryId: [
-          { required: true, message: "粮仓不能为空", trigger: "blur" }
-        ],
-        grainDepotId: [
-          { required: true, message: "粮库不能为空", trigger: "blur" }
-        ],
-        type: [
-          { required: true, message: "品种不能为空", trigger: "change" }
-        ],
-        carId: [
-          { required: true, message: "车牌号码不能为空", trigger: "blur" }
-        ],
-        firstPound: [
-          { required: true, message: "首磅(kg) 不能为空", trigger: "blur" }
-        ],
-        secondPound: [
-          { required: true, message: "次磅(kg)  不能为空", trigger: "blur" }
-        ],
-        netWeight: [
-          { required: true, message: "净重(kg)不能为空", trigger: "blur" }
-        ],
-        outDbInt: [
-          { required: true, message: "出库量不能为空", trigger: "blur" }
-        ],
-        status: [
-          { required: true, message: "状态不能为空", trigger: "blur" }
-        ],
-        qualityLevel: [
-          { required: true, message: "质量级别不能为空", trigger: "change" }
-        ],
-        time: [
-          { required: true, message: "记录时间不能为空", trigger: "blur" }
-        ]
+        // operator: [
+        //   { required: true, message: "工号id不能为空", trigger: "blur" }
+        // ],
+        // orderId: [
+        //   { required: true, message: "订单编号不能为空", trigger: "blur" }
+        // ],
+        // granaryId: [
+        //   { required: true, message: "粮仓不能为空", trigger: "blur" }
+        // ],
+        // grainDepotId: [
+        //   { required: true, message: "粮库不能为空", trigger: "blur" }
+        // ],
+        // type: [
+        //   { required: true, message: "品种不能为空", trigger: "change" }
+        // ],
+        // carId: [
+        //   { required: true, message: "车牌号码不能为空", trigger: "blur" }
+        // ],
+        // firstPound: [
+        //   { required: true, message: "首磅(kg) 不能为空", trigger: "blur" }
+        // ],
+        // secondPound: [
+        //   { required: true, message: "次磅(kg)  不能为空", trigger: "blur" }
+        // ],
+        // netWeight: [
+        //   { required: true, message: "净重(kg)不能为空", trigger: "blur" }
+        // ],
+        // outDbInt: [
+        //   { required: true, message: "出库量不能为空", trigger: "blur" }
+        // ],
+        // status: [
+        //   { required: true, message: "状态不能为空", trigger: "blur" }
+        // ],
+        // qualityLevel: [
+        //   { required: true, message: "质量级别不能为空", trigger: "change" }
+        // ],
+        // time: [
+        //   { required: true, message: "记录时间不能为空", trigger: "blur" }
+        // ]
       }
     };
   },
   created() {
+    this.getListGrain();
     this.getList();
   },
   methods: {
+    // 获取粮库列表
+    getListGrain() {
+      listGrain().then(response => {
+        this.grainList = response.data
+      });
+    },
+
+    handleGranary(value) {
+      let params = {};
+      params["parentId"] = value
+      listGranary(params).then(response => {
+        this.granaryList = response.data
+      });
+    },
     /** 查询出库列表 */
     getList() {
       this.loading = true;
@@ -590,6 +431,11 @@ export default {
         this.form = response.data;
         this.open = true;
         this.title = "修改出库";
+        let params = {};
+        params["parentId"] = this.form.grain
+        listGranary(params).then(response => {
+          this.granaryList = response.data
+        });
       });
     },
     /** 提交按钮 */

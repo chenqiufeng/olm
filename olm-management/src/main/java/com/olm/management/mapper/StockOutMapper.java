@@ -19,6 +19,8 @@ public interface StockOutMapper
      */
     public StockOut selectStockOutById(Long id);
 
+    public StockOut selectMaxOrderId(StockOut stockOut);
+
     /**
      * 查询出库列表
      * 

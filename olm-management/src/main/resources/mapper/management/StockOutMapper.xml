@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="qualityLevel"    column="quality_level"    />
         <result property="other"    column="other"    />
         <result property="time"    column="time"    />
+        <result property="createdTime"    column="created_time"    />
     </resultMap>
 
     <sql id="selectStockOutVo">
@@ -59,12 +60,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="qualityLevel != null "> and quality_level = #{qualityLevel}</if>
             <if test="other != null  and other != ''"> and other = #{other}</if>
             <if test="time != null "> and time = #{time}</if>
+
         </where>
     </select>
     
     <select id="selectStockOutById" parameterType="Long" resultMap="StockOutResult">
         <include refid="selectStockOutVo"/>
         where id = #{id}
+    </select>
+
+    <select id="selectMaxOrderId" parameterType="StockOut" resultMap="StockOutResult">
+        select MAX(order_id) as order_id from t_out_db
+        where grain_depot_id = #{grainDepotId} and granary_id = #{granaryId} and created_time >= #{createdTime}
     </select>
         
     <insert id="insertStockOut" parameterType="StockOut" useGeneratedKeys="true" keyProperty="id">

@@ -51,11 +51,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="granaryId != null "> and granary_id = #{granaryId}</if>
             <if test="ownerGoods != null  and ownerGoods != ''"> and owner_goods like concat('%', #{ownerGoods}, '%')</if>
         </where>
+        order by id desc
     </select>
 
     <select id="selectMaxOrderId" parameterType="StockIn" resultMap="StockInResult">
         select MAX(order_id) as order_id from t_in_db
-        where created_time >= #{createdTime}
+        where grain_depot_id = #{grainDepotId} and granary_id = #{granaryId} and created_time >= #{createdTime}
     </select>
 
     <select id="selectStockInById" parameterType="Long" resultMap="StockInResult">
