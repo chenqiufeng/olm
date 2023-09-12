@@ -17,6 +17,10 @@
             <groupId>com.olm</groupId>
             <artifactId>olm-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.olm</groupId>
+            <artifactId>olm-system</artifactId>
+        </dependency>
 
     </dependencies>
 

@@ -42,3 +42,21 @@ export function delGranaryGrain(id) {
     method: 'delete'
   })
 }
+
+// 查询粮仓
+export function listGranary(query) {
+  return request({
+    url: '/management/GranaryGrain/listGranary',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询粮库
+export function listGrain(query) {
+  return request({
+    url: '/management/GranaryGrain/listGrain',
+    method: 'get',
+    params: query
+  })
+}

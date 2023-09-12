@@ -86,17 +86,17 @@ public class StockIn extends BaseEntity
     private String colorAndOdor;
 
     /** 首磅时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "首磅时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date firstPoundTime;
 
     /** 次磅时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "次磅时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date secondPoundTime;
 
     /** 订单生成时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "订单生成时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date orderTime;
 
@@ -132,13 +132,55 @@ public class StockIn extends BaseEntity
     @Excel(name = "受理编号")
     private String registerNumber;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     /** 状态 */
     @Excel(name = "状态")
-    private Integer status;
+    private String status;
 
     /** 备注 */
     @Excel(name = "备注")
     private String other;
+
+    public String getGranaryName() {
+        return granaryName;
+    }
+
+    public void setGranaryName(String granaryName) {
+        this.granaryName = granaryName;
+    }
+
+    @Excel(name = "粮仓")
+    private String granaryName;
+
+    public String getGrainDepotName() {
+        return grainDepotName;
+    }
+
+    public void setGrainDepotName(String grainDepotName) {
+        this.grainDepotName = grainDepotName;
+    }
+
+    /** 粮库id */
+    @Excel(name = "粮库")
+    private String grainDepotName;
+
+
+    public Date getCreatedTime() {
+        return CreatedTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        CreatedTime = createdTime;
+    }
+
+    private Date CreatedTime;
 
     public void setId(Long id) 
     {
@@ -392,15 +434,7 @@ public class StockIn extends BaseEntity
     {
         return registerNumber;
     }
-    public void setStatus(Integer status) 
-    {
-        this.status = status;
-    }
 
-    public Integer getStatus() 
-    {
-        return status;
-    }
     public void setOther(String other) 
     {
         this.other = other;

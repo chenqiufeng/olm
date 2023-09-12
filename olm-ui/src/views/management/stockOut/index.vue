@@ -234,9 +234,9 @@
       <el-table-column label="粮库" align="center" prop="grainDepotId" />
       <el-table-column label="货主" align="center" prop="ownerGoods" />
       <el-table-column label="品种" align="center" prop="type">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_goods_type" :value="scope.row.type"/>
-        </template>
+          <template slot-scope="scope">
+            <dict-tag :options="dict.type.sys_goods_type" :value="scope.row.type"/>
+          </template>
       </el-table-column>
       <el-table-column label="车牌号码" align="center" prop="carId" />
       <el-table-column label="首磅(kg) " align="center" prop="firstPound" />

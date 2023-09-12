@@ -129,4 +129,19 @@ public class SysDeptController extends BaseController
         deptService.checkDeptDataScope(deptId);
         return toAjax(deptService.deleteDeptById(deptId));
     }
+
+    @GetMapping("/listGranary")
+    public AjaxResult listGranary(SysDept dept)
+    {
+        dept.setParentId(0L);
+        List<SysDept> depts = deptService.selectDeptList(dept);
+        return success(depts);
+    }
+
+    @GetMapping("/listGrain")
+    public AjaxResult listGrain(SysDept dept)
+    {
+        List<SysDept> depts = deptService.selectDeptList(dept);
+        return success(depts);
+    }
 }

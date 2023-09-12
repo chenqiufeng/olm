@@ -99,4 +99,36 @@ public class GranaryGrainController extends BaseController
     {
         return toAjax(granaryGrainService.deleteGranaryGrainByIds(ids));
     }
+
+    @GetMapping("/all")
+    public AjaxResult list()
+    {
+        //List<GranaryGrain> list = granaryGrainService.selectAll();
+        return null;
+    }
+
+    /**
+     * 查询所有粮仓
+     * @param granaryGrain
+     * @return
+     */
+    @GetMapping("/listGranary")
+    public AjaxResult listGranary(GranaryGrain granaryGrain)
+    {
+        List<GranaryGrain> list = granaryGrainService.selectGranaryGrainList(granaryGrain);
+        return success(list);
+    }
+
+    /**
+     * 查询所有粮库
+     * @param granaryGrain
+     * @return
+     */
+    @GetMapping("/listGrain")
+    public AjaxResult listGrain(GranaryGrain granaryGrain)
+    {
+        granaryGrain.setParentId(0L);
+        List<GranaryGrain> list = granaryGrainService.selectGranaryGrainList(granaryGrain);
+        return success(list);
+    }
 }
