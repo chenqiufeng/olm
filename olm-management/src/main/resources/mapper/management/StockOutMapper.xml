@@ -62,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="time != null "> and time = #{time}</if>
 
         </where>
+        order by id desc
     </select>
     
     <select id="selectStockOutById" parameterType="Long" resultMap="StockOutResult">

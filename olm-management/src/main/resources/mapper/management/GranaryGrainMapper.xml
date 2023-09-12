@@ -8,17 +8,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
         <result property="parentId"    column="parent_id"    />
+        <result property="customerId"    column="customer_id"    />
     </resultMap>
 
     <sql id="selectGranaryGrainVo">
-        select id, name, parent_id from t_granary_grain
+        select id, name, parent_id, customer_id from t_granary_grain
     </sql>
 
     <select id="selectGranaryGrainList" parameterType="GranaryGrain" resultMap="GranaryGrainResult">
         <include refid="selectGranaryGrainVo"/>
         <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="customerId != null "> and customer_id = #{customerId}</if>
         </where>
     </select>
     
@@ -30,20 +30,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertGranaryGrain" parameterType="GranaryGrain" useGeneratedKeys="true" keyProperty="id">
         insert into t_granary_grain
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="name != null and name != ''">name,</if>
+            <if test="name != null">name,</if>
             <if test="parentId != null">parent_id,</if>
+            <if test="customerId != null">customer_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="name != null and name != ''">#{name},</if>
+            <if test="name != null">#{name},</if>
             <if test="parentId != null">#{parentId},</if>
+            <if test="customerId != null">#{customerId},</if>
          </trim>
     </insert>
 
     <update id="updateGranaryGrain" parameterType="GranaryGrain">
         update t_granary_grain
         <trim prefix="SET" suffixOverrides=",">
-            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="name != null">name = #{name},</if>
             <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
         </trim>
         where id = #{id}
     </update>

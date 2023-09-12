@@ -42,3 +42,12 @@ export function delCustomer(id) {
     method: 'delete'
   })
 }
+
+// 查询客户列表
+export function listCustomerAll(query) {
+  return request({
+    url: '/management/customer/listCustomerAll',
+    method: 'get',
+    params: query
+  })
+}

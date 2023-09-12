@@ -4,57 +4,57 @@ import java.util.List;
 import com.olm.management.domain.GranaryGrain;
 
 /**
- * 粮库和粮仓管理Service接口
+ * 粮仓和粮库对应Service接口
  * 
  * @author cqf
- * @date 2023-09-10
+ * @date 2023-09-12
  */
 public interface IGranaryGrainService 
 {
     /**
-     * 查询粮库和粮仓管理
+     * 查询粮仓和粮库对应
      * 
-     * @param id 粮库和粮仓管理主键
-     * @return 粮库和粮仓管理
+     * @param id 粮仓和粮库对应主键
+     * @return 粮仓和粮库对应
      */
     public GranaryGrain selectGranaryGrainById(Long id);
 
     /**
-     * 查询粮库和粮仓管理列表
+     * 查询粮仓和粮库对应列表
      * 
-     * @param granaryGrain 粮库和粮仓管理
-     * @return 粮库和粮仓管理集合
+     * @param granaryGrain 粮仓和粮库对应
+     * @return 粮仓和粮库对应集合
      */
     public List<GranaryGrain> selectGranaryGrainList(GranaryGrain granaryGrain);
 
     /**
-     * 新增粮库和粮仓管理
+     * 新增粮仓和粮库对应
      * 
-     * @param granaryGrain 粮库和粮仓管理
+     * @param granaryGrain 粮仓和粮库对应
      * @return 结果
      */
     public int insertGranaryGrain(GranaryGrain granaryGrain);
 
     /**
-     * 修改粮库和粮仓管理
+     * 修改粮仓和粮库对应
      * 
-     * @param granaryGrain 粮库和粮仓管理
+     * @param granaryGrain 粮仓和粮库对应
      * @return 结果
      */
     public int updateGranaryGrain(GranaryGrain granaryGrain);
 
     /**
-     * 批量删除粮库和粮仓管理
+     * 批量删除粮仓和粮库对应
      * 
-     * @param ids 需要删除的粮库和粮仓管理主键集合
+     * @param ids 需要删除的粮仓和粮库对应主键集合
      * @return 结果
      */
     public int deleteGranaryGrainByIds(Long[] ids);
 
     /**
-     * 删除粮库和粮仓管理信息
+     * 删除粮仓和粮库对应信息
      * 
-     * @param id 粮库和粮仓管理主键
+     * @param id 粮仓和粮库对应主键
      * @return 结果
      */
     public int deleteGranaryGrainById(Long id);

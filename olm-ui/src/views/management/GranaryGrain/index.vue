@@ -1,21 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="粮仓名称" prop="name">
-        <el-input
-          v-model="queryParams.name"
-          placeholder="请输入粮仓名称"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属关系" prop="parentId">
-        <el-input
-          v-model="queryParams.parentId"
-          placeholder="请输入所属关系"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="客户" prop="granary">
+        <el-select v-model="queryParams.customerId" placeholder="请选择客户" clearable  @change="handleCustomer">
+          <el-option
+            v-for="customer in customerList"
+            :key="customer.id"
+            :label="customer.company"
+            :value="customer.id"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item>
 	    <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -103,6 +97,7 @@
 
 <script>
 import { listGranaryGrain, getGranaryGrain, delGranaryGrain, addGranaryGrain, updateGranaryGrain } from "@/api/management/GranaryGrain";
+import {listCustomerAll} from "@/api/management/customer";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -121,6 +116,8 @@ export default {
       GranaryGrainList: [],
       // 粮库和粮仓管理树选项
       GranaryGrainOptions: [],
+      // 客户列表
+      customerList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -132,25 +129,33 @@ export default {
       // 查询参数
       queryParams: {
         name: null,
-        parentId: null
+        parentId: null,
+        customerId:null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        name: [
-          { required: true, message: "粮仓名称不能为空", trigger: "blur" }
-        ],
-        parentId: [
-          { required: true, message: "所属关系不能为空", trigger: "blur" }
-        ]
+        // name: [
+        //   { required: true, message: "粮仓名称不能为空", trigger: "blur" }
+        // ],
+        // parentId: [
+        //   { required: true, message: "所属关系不能为空", trigger: "blur" }
+        // ]
       }
     };
   },
   created() {
+    this.getCustomerList();
     this.getList();
   },
   methods: {
+    // 获取客户列表
+    getCustomerList() {
+      listCustomerAll().then(response => {
+        this.customerList = response.data
+      })
+    },
     /** 查询粮库和粮仓管理列表 */
     getList() {
       this.loading = true;
@@ -201,6 +206,10 @@ export default {
     resetQuery() {
       this.resetForm("queryForm");
       this.handleQuery();
+    },
+
+    handleCustomer() {
+
     },
     /** 新增按钮操作 */
     handleAdd(row) {

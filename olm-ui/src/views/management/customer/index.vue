@@ -1,22 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="粮仓id" prop="granaryId">
-        <el-input
-          v-model="queryParams.granaryId"
-          placeholder="请输入粮仓id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="粮库id" prop="grainDepotId">
-        <el-input
-          v-model="queryParams.grainDepotId"
-          placeholder="请输入粮库id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="公司名称" prop="company">
         <el-input
           v-model="queryParams.company"
@@ -24,78 +8,6 @@
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <el-form-item label="姓名" prop="name">
-        <el-input
-          v-model="queryParams.name"
-          placeholder="请输入姓名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="身份证号" prop="idcard">
-        <el-input
-          v-model="queryParams.idcard"
-          placeholder="请输入身份证号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="手机号" prop="cellphone">
-        <el-input
-          v-model="queryParams.cellphone"
-          placeholder="请输入手机号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="地址" prop="address">
-        <el-input
-          v-model="queryParams.address"
-          placeholder="请输入地址"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="登录账号" prop="accountInt">
-        <el-input
-          v-model="queryParams.accountInt"
-          placeholder="请输入登录账号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="总额度" prop="totalAmount">
-        <el-input
-          v-model="queryParams.totalAmount"
-          placeholder="请输入总额度"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="粮仓级别" prop="grainLevel">
-        <el-input
-          v-model="queryParams.grainLevel"
-          placeholder="请输入粮仓级别"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="操作人" prop="opearator">
-        <el-input
-          v-model="queryParams.opearator"
-          placeholder="请输入操作人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="创建时间" prop="createdTime">
-        <el-date-picker clearable
-          v-model="queryParams.createdTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择创建时间">
-        </el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -150,29 +62,15 @@
     </el-row>
 
     <el-table v-loading="loading" :data="customerList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="粮仓id" align="center" prop="granaryId" />
-      <el-table-column label="粮库id" align="center" prop="grainDepotId" />
+      <el-table-column label="客户id" align="center" prop="id" />
       <el-table-column label="公司名称" align="center" prop="company" />
-      <el-table-column label="姓名" align="center" prop="name" />
+      <el-table-column label="法人姓名" align="center" prop="name" />
       <el-table-column label="身份证号" align="center" prop="idcard" />
       <el-table-column label="手机号" align="center" prop="cellphone" />
       <el-table-column label="地址" align="center" prop="address" />
-      <el-table-column label="登录账号" align="center" prop="accountInt" />
       <el-table-column label="总额度" align="center" prop="totalAmount" />
-      <el-table-column label="粮仓级别" align="center" prop="grainLevel" />
       <el-table-column label="操作人" align="center" prop="opearator" />
-      <el-table-column label="创建时间" align="center" prop="createdTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createdTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="更新时间" align="center" prop="updatedTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.updatedTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="创建时间" align="center" prop="createdTime" width="180"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -202,41 +100,46 @@
     />
 
     <!-- 添加或修改客户管理对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="1200px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="粮仓id" prop="granaryId">
-          <el-input v-model="form.granaryId" placeholder="请输入粮仓id" />
-        </el-form-item>
-        <el-form-item label="粮库id" prop="grainDepotId">
-          <el-input v-model="form.grainDepotId" placeholder="请输入粮库id" />
-        </el-form-item>
-        <el-form-item label="公司名称" prop="company">
-          <el-input v-model="form.company" placeholder="请输入公司名称" />
-        </el-form-item>
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入姓名" />
-        </el-form-item>
-        <el-form-item label="身份证号" prop="idcard">
-          <el-input v-model="form.idcard" placeholder="请输入身份证号" />
-        </el-form-item>
-        <el-form-item label="手机号" prop="cellphone">
-          <el-input v-model="form.cellphone" placeholder="请输入手机号" />
-        </el-form-item>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="公司名称" prop="company">
+              <el-input v-model="form.company" placeholder="请输入公司名称" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="法人姓名" prop="name">
+              <el-input v-model="form.name" placeholder="请输入姓名" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="身份证号" prop="idcard">
+              <el-input v-model="form.idcard" placeholder="请输入身份证号" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+                <el-form-item label="手机号" prop="cellphone">
+                  <el-input v-model="form.cellphone" placeholder="请输入手机号" />
+                </el-form-item>
+          </el-col>
+          <el-col :span="8">
+                <el-form-item label="地址" prop="address">
+                  <el-input v-model="form.address" placeholder="请输入地址" />
+                </el-form-item>
+          </el-col>
+          <el-col :span="8">
+                <el-form-item label="总额度" prop="totalAmount">
+                  <el-input v-model="form.totalAmount" placeholder="请输入总额度" />
+                </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入地址" />
         </el-form-item>
-        <el-form-item label="登录账号" prop="accountInt">
-          <el-input v-model="form.accountInt" placeholder="请输入登录账号" />
-        </el-form-item>
-        <el-form-item label="总额度" prop="totalAmount">
-          <el-input v-model="form.totalAmount" placeholder="请输入总额度" />
-        </el-form-item>
-        <el-form-item label="粮仓级别" prop="grainLevel">
-          <el-input v-model="form.grainLevel" placeholder="请输入粮仓级别" />
-        </el-form-item>
-        <el-form-item label="操作人" prop="opearator">
-          <el-input v-model="form.opearator" placeholder="请输入操作人" />
-        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -292,33 +195,33 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        granaryId: [
-          { required: true, message: "粮仓id不能为空", trigger: "blur" }
-        ],
-        grainDepotId: [
-          { required: true, message: "粮库id不能为空", trigger: "blur" }
-        ],
-        company: [
-          { required: true, message: "公司名称不能为空", trigger: "blur" }
-        ],
-        name: [
-          { required: true, message: "姓名不能为空", trigger: "blur" }
-        ],
-        idcard: [
-          { required: true, message: "身份证号不能为空", trigger: "blur" }
-        ],
-        cellphone: [
-          { required: true, message: "手机号不能为空", trigger: "blur" }
-        ],
-        address: [
-          { required: true, message: "地址不能为空", trigger: "blur" }
-        ],
-        accountInt: [
-          { required: true, message: "登录账号不能为空", trigger: "blur" }
-        ],
-        grainLevel: [
-          { required: true, message: "粮仓级别不能为空", trigger: "blur" }
-        ],
+        // granaryId: [
+        //   { required: true, message: "粮仓id不能为空", trigger: "blur" }
+        // ],
+        // grainDepotId: [
+        //   { required: true, message: "粮库id不能为空", trigger: "blur" }
+        // ],
+        // company: [
+        //   { required: true, message: "公司名称不能为空", trigger: "blur" }
+        // ],
+        // name: [
+        //   { required: true, message: "姓名不能为空", trigger: "blur" }
+        // ],
+        // idcard: [
+        //   { required: true, message: "身份证号不能为空", trigger: "blur" }
+        // ],
+        // cellphone: [
+        //   { required: true, message: "手机号不能为空", trigger: "blur" }
+        // ],
+        // address: [
+        //   { required: true, message: "地址不能为空", trigger: "blur" }
+        // ],
+        // accountInt: [
+        //   { required: true, message: "登录账号不能为空", trigger: "blur" }
+        // ],
+        // grainLevel: [
+        //   { required: true, message: "粮仓级别不能为空", trigger: "blur" }
+        // ],
       }
     };
   },

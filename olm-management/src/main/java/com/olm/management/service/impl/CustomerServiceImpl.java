@@ -1,6 +1,9 @@
 package com.olm.management.service.impl;
 
 import java.util.List;
+
+import com.olm.common.core.domain.model.LoginUser;
+import com.olm.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.olm.management.mapper.CustomerMapper;
@@ -52,6 +55,8 @@ public class CustomerServiceImpl implements ICustomerService
     @Override
     public int insertCustomer(Customer customer)
     {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        customer.setOpearator(loginUser.getUsername());
         return customerMapper.insertCustomer(customer);
     }
 

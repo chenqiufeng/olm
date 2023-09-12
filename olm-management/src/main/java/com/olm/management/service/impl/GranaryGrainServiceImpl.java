@@ -1,9 +1,6 @@
 package com.olm.management.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.olm.management.mapper.GranaryGrainMapper;
@@ -11,10 +8,10 @@ import com.olm.management.domain.GranaryGrain;
 import com.olm.management.service.IGranaryGrainService;
 
 /**
- * 粮库和粮仓管理Service业务层处理
+ * 粮仓和粮库对应Service业务层处理
  * 
  * @author cqf
- * @date 2023-09-10
+ * @date 2023-09-12
  */
 @Service
 public class GranaryGrainServiceImpl implements IGranaryGrainService 
@@ -23,10 +20,10 @@ public class GranaryGrainServiceImpl implements IGranaryGrainService
     private GranaryGrainMapper granaryGrainMapper;
 
     /**
-     * 查询粮库和粮仓管理
+     * 查询粮仓和粮库对应
      * 
-     * @param id 粮库和粮仓管理主键
-     * @return 粮库和粮仓管理
+     * @param id 粮仓和粮库对应主键
+     * @return 粮仓和粮库对应
      */
     @Override
     public GranaryGrain selectGranaryGrainById(Long id)
@@ -35,10 +32,10 @@ public class GranaryGrainServiceImpl implements IGranaryGrainService
     }
 
     /**
-     * 查询粮库和粮仓管理列表
+     * 查询粮仓和粮库对应列表
      * 
-     * @param granaryGrain 粮库和粮仓管理
-     * @return 粮库和粮仓管理
+     * @param granaryGrain 粮仓和粮库对应
+     * @return 粮仓和粮库对应
      */
     @Override
     public List<GranaryGrain> selectGranaryGrainList(GranaryGrain granaryGrain)
@@ -47,9 +44,9 @@ public class GranaryGrainServiceImpl implements IGranaryGrainService
     }
 
     /**
-     * 新增粮库和粮仓管理
+     * 新增粮仓和粮库对应
      * 
-     * @param granaryGrain 粮库和粮仓管理
+     * @param granaryGrain 粮仓和粮库对应
      * @return 结果
      */
     @Override
@@ -59,9 +56,9 @@ public class GranaryGrainServiceImpl implements IGranaryGrainService
     }
 
     /**
-     * 修改粮库和粮仓管理
+     * 修改粮仓和粮库对应
      * 
-     * @param granaryGrain 粮库和粮仓管理
+     * @param granaryGrain 粮仓和粮库对应
      * @return 结果
      */
     @Override
@@ -71,9 +68,9 @@ public class GranaryGrainServiceImpl implements IGranaryGrainService
     }
 
     /**
-     * 批量删除粮库和粮仓管理
+     * 批量删除粮仓和粮库对应
      * 
-     * @param ids 需要删除的粮库和粮仓管理主键
+     * @param ids 需要删除的粮仓和粮库对应主键
      * @return 结果
      */
     @Override
@@ -83,9 +80,9 @@ public class GranaryGrainServiceImpl implements IGranaryGrainService
     }
 
     /**
-     * 删除粮库和粮仓管理信息
+     * 删除粮仓和粮库对应信息
      * 
-     * @param id 粮库和粮仓管理主键
+     * @param id 粮仓和粮库对应主键
      * @return 结果
      */
     @Override
