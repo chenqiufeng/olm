@@ -10,7 +10,7 @@
         />
       </el-form-item>
       <el-form-item label="粮库" prop="granary">
-        <el-select v-model="queryParams.grainId" placeholder="请选择粮库" clearable  @change="handleGranary">
+        <el-select v-model="queryParams.grainDepotId" placeholder="请选择粮库" clearable  @change="handleGranary">
           <el-option
             v-for="grain in grainList"
             :key="grain.id"
@@ -297,45 +297,50 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        // operator: [
-        //   { required: true, message: "工号id不能为空", trigger: "blur" }
-        // ],
-        // orderId: [
-        //   { required: true, message: "订单编号不能为空", trigger: "blur" }
-        // ],
-        // granaryId: [
-        //   { required: true, message: "粮仓不能为空", trigger: "blur" }
-        // ],
-        // grainDepotId: [
-        //   { required: true, message: "粮库不能为空", trigger: "blur" }
-        // ],
-        // type: [
-        //   { required: true, message: "品种不能为空", trigger: "change" }
-        // ],
-        // carId: [
-        //   { required: true, message: "车牌号码不能为空", trigger: "blur" }
-        // ],
-        // firstPound: [
-        //   { required: true, message: "首磅(kg) 不能为空", trigger: "blur" }
-        // ],
-        // secondPound: [
-        //   { required: true, message: "次磅(kg)  不能为空", trigger: "blur" }
-        // ],
-        // netWeight: [
-        //   { required: true, message: "净重(kg)不能为空", trigger: "blur" }
-        // ],
-        // outDbInt: [
-        //   { required: true, message: "出库量不能为空", trigger: "blur" }
-        // ],
-        // status: [
-        //   { required: true, message: "状态不能为空", trigger: "blur" }
-        // ],
-        // qualityLevel: [
-        //   { required: true, message: "质量级别不能为空", trigger: "change" }
-        // ],
-        // time: [
-        //   { required: true, message: "记录时间不能为空", trigger: "blur" }
-        // ]
+        granaryId: [
+          { required: true, message: "粮仓不能为空", trigger: "change" }
+        ],
+        grainDepotId: [
+          { required: true, message: "粮库不能为空", trigger: "change" }
+        ],
+        firstPound: [
+          {
+            required: true,
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+        secondPound: [
+          {
+            required: true,
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+        goodsType: [
+          { required: true, message: "品种不能为空", trigger: "change" }
+        ],
+
+        outDbInt: [
+          {
+            required: true,
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+
       }
     };
   },
@@ -353,10 +358,14 @@ export default {
 
     handleGranary(value) {
       let params = {};
-      params["parentId"] = value
-      listGranary(params).then(response => {
-        this.granaryList = response.data
-      });
+      this.granaryList = [];
+      this.queryParams.granaryId = null;
+      if (value != '') {
+        params["parentId"] = value
+        listGranary(params).then(response => {
+          this.granaryList = response.data
+        });
+      }
     },
     /** 查询出库列表 */
     getList() {
@@ -442,6 +451,10 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
+          if (parseFloat(this.form.firstPound) > parseFloat(this.form.secondPound)) {
+            this.$message.error("首磅重量不能大于次磅重量");
+            return;
+          }
           if (this.form.id != null) {
             updateStockOut(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");

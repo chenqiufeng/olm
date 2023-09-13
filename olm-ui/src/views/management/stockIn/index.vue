@@ -24,7 +24,7 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="粮库" prop="granary">
-        <el-select v-model="queryParams.grainId" placeholder="请选择粮库" clearable  @change="handleGranary">
+        <el-select v-model="queryParams.grainDepotId" placeholder="请选择粮库" clearable  @change="handleGranary">
           <el-option
             v-for="grain in grainList"
             :key="grain.id"
@@ -33,7 +33,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="粮仓" prop="granary">
+      <el-form-item label="粮仓" prop="granaryId">
         <el-select v-model="queryParams.granaryId" placeholder="请选择粮仓" clearable>
           <el-option
             v-for="granary in granaryList"
@@ -359,7 +359,11 @@ export default {
         ownerGoods:null,
         granary:null,
         grain:null,
-        grainId:null
+        grainId:null,
+        grainDepotId:null,
+        params:null,
+        orderTimeStart:null,
+        orderTimeEnd:null
       },
       // 表单参数
       form: {},
@@ -506,9 +510,10 @@ export default {
     /** 查询入库列表 */
     getList() {
       this.loading = true;
+
       if (null != this.daterangeOrderTime && '' != this.daterangeOrderTime) {
-        this.queryParams.params["beginOrderTime"] = this.daterangeOrderTime[0];
-        this.queryParams.params["endOrderTime"] = this.daterangeOrderTime[1];
+        this.queryParams.orderTimeStart = this.daterangeOrderTime[0];
+        this.queryParams.orderTimeEnd = this.daterangeOrderTime[1];
       }
       listStockIn(this.queryParams).then(response => {
         this.stockInList = response.rows;
@@ -518,10 +523,14 @@ export default {
     },
     handleGranary(value) {
       let params = {};
-      params["parentId"] = value
-      listGranary(params).then(response => {
-        this.granaryList = response.data
-      });
+      this.granaryList = [];
+      this.queryParams.granaryId = null;
+      if (value != '') {
+        params["parentId"] = value
+        listGranary(params).then(response => {
+          this.granaryList = response.data
+        });
+      }
     },
     // 取消按钮
     cancel() {
@@ -609,10 +618,15 @@ export default {
         });
       });
     },
+
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
+          if (parseFloat(this.form.firstPound) < parseFloat(this.form.secondPound)) {
+              this.$message.error("首磅重量不能小于次磅重量");
+              return;
+          }
           if (this.form.id != null) {
             updateStockIn(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");

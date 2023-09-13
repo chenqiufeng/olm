@@ -51,6 +51,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="grainDepotId != null "> and grain_depot_id = #{grainDepotId}</if>
             <if test="granaryId != null "> and granary_id = #{granaryId}</if>
             <if test="ownerGoods != null  and ownerGoods != ''"> and owner_goods like concat('%', #{ownerGoods}, '%')</if>
+            <if test="orderTimeStart != null  and orderTimeStart != ''"> and order_time >= #{orderTimeStart}</if>
+            <if test="orderTimeEnd != null  and orderTimeEnd != ''"> and order_time &lt;= #{orderTimeEnd}</if>
         </where>
         order by id desc
     </select>

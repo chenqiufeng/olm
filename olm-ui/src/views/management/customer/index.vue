@@ -136,9 +136,6 @@
                 </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="地址" prop="address">
-          <el-input v-model="form.address" placeholder="请输入地址" />
-        </el-form-item>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -201,18 +198,28 @@ export default {
         // grainDepotId: [
         //   { required: true, message: "粮库id不能为空", trigger: "blur" }
         // ],
-        // company: [
-        //   { required: true, message: "公司名称不能为空", trigger: "blur" }
-        // ],
-        // name: [
-        //   { required: true, message: "姓名不能为空", trigger: "blur" }
-        // ],
-        // idcard: [
-        //   { required: true, message: "身份证号不能为空", trigger: "blur" }
-        // ],
-        // cellphone: [
-        //   { required: true, message: "手机号不能为空", trigger: "blur" }
-        // ],
+        company: [
+          { required: true, message: "公司名称不能为空", trigger: "blur" }
+        ],
+        name: [
+          { required: true, message: "姓名不能为空", trigger: "blur" }
+        ],
+        idcard: [
+          {
+            required: true,
+            message: "请输入正确的身份证号码",
+            pattern: /^[1-9]\d{5}(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dxX]$/,
+            trigger: ["blur", "change"]
+          }
+        ],
+        cellphone: [
+          {
+            required: true,
+            pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
+            message: "请输入正确的手机号码",
+            trigger: ["blur", "change"]
+          }
+        ],
         // address: [
         //   { required: true, message: "地址不能为空", trigger: "blur" }
         // ],

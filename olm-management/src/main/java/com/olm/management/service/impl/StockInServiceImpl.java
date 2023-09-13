@@ -50,6 +50,14 @@ public class StockInServiceImpl implements IStockInService {
      */
     @Override
     public List<StockIn> selectStockInList(StockIn stockIn) {
+        if (!Objects.isNull(stockIn.getOrderTimeStart())) {
+            String orderTimeStart = stockIn.getOrderTimeStart()+  " 00:00:00";
+            stockIn.setOrderTimeStart(orderTimeStart);
+        }
+        if (!Objects.isNull(stockIn.getOrderTimeEnd())) {
+            String orderTimeEnd = stockIn.getOrderTimeEnd()+  " 23:59:59";
+            stockIn.setOrderTimeEnd(orderTimeEnd);
+        }
         List<StockIn> stockIns = stockInMapper.selectStockInList(stockIn);
         for (StockIn stockInTemp : stockIns) {
             GranaryGrain granaryGrain = granaryGrainMapper.selectGranaryGrainById(stockInTemp.getGrainDepotId());

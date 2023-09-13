@@ -100,9 +100,38 @@ public class StockIn extends BaseEntity
     @Excel(name = "订单生成时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date orderTime;
 
+    public String getOrderTimeStart() {
+        return orderTimeStart;
+    }
+
+    public void setOrderTimeStart(String orderTimeStart) {
+        this.orderTimeStart = orderTimeStart;
+    }
+
+    private String orderTimeStart;
+
+
+    public String getOrderTimeEnd() {
+        return orderTimeEnd;
+    }
+
+    public void setOrderTimeEnd(String orderTimeEnd) {
+        this.orderTimeEnd = orderTimeEnd;
+    }
+
+    private String orderTimeEnd;
+
+    public String getDeductionDeduction() {
+        return deductionDeduction;
+    }
+
+    public void setDeductionDeduction(String deductionDeduction) {
+        this.deductionDeduction = deductionDeduction;
+    }
+
     /** 扣量情况(kg) */
     @Excel(name = "扣量情况(kg)")
-    private BigDecimal deductionDeduction;
+    private String deductionDeduction;
 
     /** 入库量 */
     @Excel(name = "入库量")
@@ -376,15 +405,7 @@ public class StockIn extends BaseEntity
     {
         return orderTime;
     }
-    public void setDeductionDeduction(BigDecimal deductionDeduction) 
-    {
-        this.deductionDeduction = deductionDeduction;
-    }
 
-    public BigDecimal getDeductionDeduction() 
-    {
-        return deductionDeduction;
-    }
     public void setInDbInt(Long inDbInt) 
     {
         this.inDbInt = inDbInt;
