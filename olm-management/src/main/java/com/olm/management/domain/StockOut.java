@@ -161,6 +161,25 @@ public class StockOut extends BaseEntity
         this.deptId = deptId;
     }
 
+    public String getOrderTimeStart() {
+        return orderTimeStart;
+    }
+
+    public void setOrderTimeStart(String orderTimeStart) {
+        this.orderTimeStart = orderTimeStart;
+    }
+
+    private String orderTimeStart;
+
+    public String getOrderTimeEnd() {
+        return orderTimeEnd;
+    }
+
+    public void setOrderTimeEnd(String orderTimeEnd) {
+        this.orderTimeEnd = orderTimeEnd;
+    }
+
+    private String orderTimeEnd;
     /**
      * 所属客户
      */

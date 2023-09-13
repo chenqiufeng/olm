@@ -61,7 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="qualityLevel != null "> and quality_level = #{qualityLevel}</if>
             <if test="other != null  and other != ''"> and other = #{other}</if>
             <if test="time != null "> and time = #{time}</if>
-
+            <if test="orderTimeStart != null  and orderTimeStart != ''"> and order_time >= #{orderTimeStart}</if>
+            <if test="orderTimeEnd != null  and orderTimeEnd != ''"> and order_time &lt;= #{orderTimeEnd}</if>
         </where>
         order by id desc
     </select>

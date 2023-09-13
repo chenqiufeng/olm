@@ -49,6 +49,14 @@ public class StockOutServiceImpl implements IStockOutService {
      */
     @Override
     public List<StockOut> selectStockOutList(StockOut stockOut) {
+        if (!Objects.isNull(stockOut.getOrderTimeStart())) {
+            String orderTimeStart = stockOut.getOrderTimeStart()+  " 00:00:00";
+            stockOut.setOrderTimeStart(orderTimeStart);
+        }
+        if (!Objects.isNull(stockOut.getOrderTimeEnd())) {
+            String orderTimeEnd = stockOut.getOrderTimeEnd()+  " 23:59:59";
+            stockOut.setOrderTimeEnd(orderTimeEnd);
+        }
         List<StockOut> stockOuts = stockOutMapper.selectStockOutList(stockOut);
         for (StockOut stockOutTemp : stockOuts) {
             GranaryGrain granaryGrain = granaryGrainMapper.selectGranaryGrainById(stockOutTemp.getGrainDepotId());

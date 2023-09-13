@@ -9,6 +9,17 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="订单时间">
+        <el-date-picker
+          v-model="daterangeOrderTime"
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
+      </el-form-item>
       <el-form-item label="粮库" prop="granary">
         <el-select v-model="queryParams.grainDepotId" placeholder="请选择粮库" clearable  @change="handleGranary">
           <el-option
@@ -253,6 +264,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      daterangeOrderTime: [],
       // 出库表格数据
       stockOutList: [],
       // 粮仓
@@ -370,6 +382,10 @@ export default {
     /** 查询出库列表 */
     getList() {
       this.loading = true;
+      if (null != this.daterangeOrderTime && '' != this.daterangeOrderTime) {
+        this.queryParams.orderTimeStart = this.daterangeOrderTime[0];
+        this.queryParams.orderTimeEnd = this.daterangeOrderTime[1];
+      }
       listStockOut(this.queryParams).then(response => {
         this.stockOutList = response.rows;
         this.total = response.total;
@@ -417,6 +433,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.daterangeOrderTime = [];
       this.resetForm("queryForm");
       this.handleQuery();
     },
