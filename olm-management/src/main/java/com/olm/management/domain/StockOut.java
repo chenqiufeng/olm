@@ -153,6 +153,19 @@ public class StockOut extends BaseEntity
 
     private Date CreatedTime;
 
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
+    }
+
+    /**
+     * 所属客户
+     */
+    private Integer deptId;
+
     public void setId(Long id) 
     {
         this.id = id;

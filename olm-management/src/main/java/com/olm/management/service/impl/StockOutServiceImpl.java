@@ -76,6 +76,7 @@ public class StockOutServiceImpl implements IStockOutService {
         stockOut.setFirstPoundWorker(loginUser.getUsername());
         stockOut.setSecondPoundWorker(loginUser.getUsername());
         stockOut.setOrderId(genOrderId(stockOut));
+        stockOut.setDeptId(loginUser.getDeptId().intValue());
         return stockOutMapper.insertStockOut(stockOut);
     }
 

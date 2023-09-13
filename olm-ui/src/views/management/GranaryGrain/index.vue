@@ -50,6 +50,7 @@
     >
       <el-table-column label="粮仓名称" prop="name" />
       <el-table-column label="所属关系" align="center" prop="parentId" />
+      <el-table-column label="客户名称" align="center" prop="customerName" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -80,7 +81,17 @@
     <!-- 添加或修改粮库和粮仓管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="粮仓名称" prop="name">
+        <el-form-item label="客户" prop="granary">
+          <el-select v-model="form.customerId" placeholder="请选择客户" clearable  @change="handleCustomer">
+            <el-option
+              v-for="customer in customerList"
+              :key="customer.id"
+              :label="customer.company"
+              :value="customer.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="粮库/粮仓" prop="name">
           <el-input v-model="form.name" placeholder="请输入粮仓名称" />
         </el-form-item>
         <el-form-item label="所属关系" prop="parentId">

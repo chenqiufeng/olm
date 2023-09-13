@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="other"    column="other"    />
         <result property="time"    column="time"    />
         <result property="createdTime"    column="created_time"    />
+        <result property="deptId"    column="dept_id"    />
     </resultMap>
 
     <sql id="selectStockOutVo">
@@ -100,6 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="qualityLevel != null">quality_level,</if>
             <if test="other != null">other,</if>
             <if test="time != null">time,</if>
+            <if test="deptId != null">dept_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="operator != null and operator != ''">#{operator},</if>
@@ -124,6 +126,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="qualityLevel != null">#{qualityLevel},</if>
             <if test="other != null">#{other},</if>
             <if test="time != null">#{time},</if>
+            <if test="deptId != null">#{deptId},</if>
          </trim>
     </insert>
 

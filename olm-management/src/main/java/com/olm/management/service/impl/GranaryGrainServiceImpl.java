@@ -1,6 +1,9 @@
 package com.olm.management.service.impl;
 
 import java.util.List;
+
+import com.olm.management.domain.Customer;
+import com.olm.management.mapper.CustomerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.olm.management.mapper.GranaryGrainMapper;
@@ -18,6 +21,9 @@ public class GranaryGrainServiceImpl implements IGranaryGrainService
 {
     @Autowired
     private GranaryGrainMapper granaryGrainMapper;
+
+    @Autowired
+    private CustomerMapper customerMapper;
 
     /**
      * 查询粮仓和粮库对应
@@ -40,7 +46,12 @@ public class GranaryGrainServiceImpl implements IGranaryGrainService
     @Override
     public List<GranaryGrain> selectGranaryGrainList(GranaryGrain granaryGrain)
     {
-        return granaryGrainMapper.selectGranaryGrainList(granaryGrain);
+        List<GranaryGrain> granaryGrainList = granaryGrainMapper.selectGranaryGrainList(granaryGrain);
+        for (GranaryGrain granaryGrainTemp: granaryGrainList) {
+            Customer customer = customerMapper.selectCustomerById(granaryGrainTemp.getCustomerId());
+            granaryGrainTemp.setCustomerName(customer.getCompany());
+        }
+        return granaryGrainList;
     }
 
     /**

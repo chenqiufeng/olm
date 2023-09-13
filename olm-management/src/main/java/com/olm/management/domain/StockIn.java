@@ -148,6 +148,20 @@ public class StockIn extends BaseEntity
     @Excel(name = "备注")
     private String other;
 
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
+    }
+
+    /**
+     * 所属客户
+     */
+    private Integer deptId;
+
+
     public String getGranaryName() {
         return granaryName;
     }

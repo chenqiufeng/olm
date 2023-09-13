@@ -27,8 +27,19 @@ public class GranaryGrain extends BaseEntity
     private Long parentId;
 
     /** 客户id */
-    @Excel(name = "客户id")
+
     private Long customerId;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    @Excel(name = "客户id")
+    private String customerName;
 
     public void setId(Long id) 
     {

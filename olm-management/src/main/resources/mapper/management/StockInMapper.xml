@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="status"    column="status"    />
         <result property="other"    column="other"    />
         <result property="createdTime"    column="created_time"    />
+        <result property="deptId"    column="dept_id"    />
     </resultMap>
 
     <sql id="selectStockInVo">
@@ -96,6 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="registerNumber != null and registerNumber != ''">register_number,</if>
             <if test="status != null">status,</if>
             <if test="other != null">other,</if>
+            <if test="deptId != null">dept_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="operator != null and operator != ''">#{operator},</if>
@@ -127,6 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="registerNumber != null and registerNumber != ''">#{registerNumber},</if>
             <if test="status != null">#{status},</if>
             <if test="other != null">#{other},</if>
+            <if test="deptId != null">#{deptId},</if>
          </trim>
     </insert>
 

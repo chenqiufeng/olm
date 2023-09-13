@@ -81,6 +81,7 @@ public class StockInServiceImpl implements IStockInService {
         stockIn.setOrderId(genOrderId(stockIn));
         stockIn.setStatus("6");
         stockIn.setRegisterNumber(stockIn.getOrderId());
+        stockIn.setDeptId(loginUser.getDeptId().intValue());
         return stockInMapper.insertStockIn(stockIn);
     }
 
