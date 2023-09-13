@@ -194,8 +194,8 @@
         <el-divider />
         <el-row>
           <el-col :span="8">
-            <el-form-item label="水分">
-              <el-input v-model="form.moistureContent" :min-height="192"/>
+            <el-form-item label="水分" prop="moistureContent">
+              <el-input v-model="form.moistureContent" placeholder="请输入水份"/>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -365,27 +365,115 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        // orderId: [
-        //   { required: true, message: "订单编号不能为空", trigger: "blur" }
-        // ],
-        // granaryId: [
-        //   { required: true, message: "粮仓id不能为空", trigger: "change" }
-        // ],
-        // grainDepotId: [
-        //   { required: true, message: "粮库id不能为空", trigger: "change" }
-        // ],
-        // goodsType: [
-        //   { required: true, message: "品种不能为空", trigger: "change" }
-        // ],
-        // firstPound: [
-        //   { required: true, message: "首磅(kg)不能为空", trigger: "blur" }
-        // ],
+        firstPound: [
+          {
+            required: true,
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+
+        moistureContent: [
+          {
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+        granaryId: [
+          { required: true, message: "粮仓不能为空", trigger: "change" }
+        ],
+        grainDepotId: [
+          { required: true, message: "粮库不能为空", trigger: "change" }
+        ],
+        netWeight: [
+          {
+            required: true,
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+        goodsType: [
+          { required: true, message: "品种不能为空", trigger: "change" }
+        ],
+
+        secondPound: [
+          {
+            required: true,
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
         // orderTime: [
         //   { required: true, message: "订单生成时间不能为空", trigger: "blur" }
         // ],
-        // inDbInt: [
-        //   { required: true, message: "入库量不能为空", trigger: "blur" }
-        // ],
+        inDbInt: [
+          {
+            required: true,
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+        deduction: [
+          {
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+        unitWeight: [
+          {
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+        impurity: [
+          {
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+        mildewPer: [
+          {
+            type: "number",
+            message: "请输入正确的数字",
+            trigger: ["blur", "change"],
+            transform(value) {
+              return value ==="" ? 0 : Number(value);
+            },
+          }
+        ],
+
         // registerNumber: [
         //   { required: true, message: "受理编号不能为空", trigger: "blur" }
         // ],
