@@ -41,9 +41,17 @@ public class Customer extends BaseEntity
     @Excel(name = "身份证号")
     private String idcard;
 
+    public String getCellphone() {
+        return cellphone;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
+    }
+
     /** 手机号 */
     @Excel(name = "手机号")
-    private Long cellphone;
+    private String cellphone;
 
     /** 地址 */
     @Excel(name = "地址")
@@ -131,15 +139,7 @@ public class Customer extends BaseEntity
     {
         return idcard;
     }
-    public void setCellphone(Long cellphone) 
-    {
-        this.cellphone = cellphone;
-    }
 
-    public Long getCellphone() 
-    {
-        return cellphone;
-    }
     public void setAddress(String address) 
     {
         this.address = address;

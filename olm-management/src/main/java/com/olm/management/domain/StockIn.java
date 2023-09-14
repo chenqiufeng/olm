@@ -137,9 +137,17 @@ public class StockIn extends BaseEntity
     @Excel(name = "入库量")
     private Long inDbInt;
 
+    public BigDecimal getDeduction() {
+        return deduction;
+    }
+
+    public void setDeduction(BigDecimal deduction) {
+        this.deduction = deduction;
+    }
+
     /** 扣量 */
     @Excel(name = "扣量")
-    private Long deduction;
+    private BigDecimal deduction;
 
     /** 质检员 */
     @Excel(name = "质检员")
@@ -415,15 +423,7 @@ public class StockIn extends BaseEntity
     {
         return inDbInt;
     }
-    public void setDeduction(Long deduction) 
-    {
-        this.deduction = deduction;
-    }
 
-    public Long getDeduction() 
-    {
-        return deduction;
-    }
     public void setQualityWorker(String qualityWorker) 
     {
         this.qualityWorker = qualityWorker;
