@@ -18,8 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectGranaryGrainList" parameterType="GranaryGrain" resultMap="GranaryGrainResult">
         <include refid="selectGranaryGrainVo"/>
         <where>  
-            <if test="customerId != null "> and customer_id = #{customerId}</if>
+            <if test="customerId != null and customerId != 0 "> and customer_id = #{customerId}</if>
             <if test="parentId != null "> and parent_id = #{parentId}</if>
+
         </where>
     </select>
     

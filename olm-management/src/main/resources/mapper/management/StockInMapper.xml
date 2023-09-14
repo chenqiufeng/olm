@@ -53,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ownerGoods != null  and ownerGoods != ''"> and owner_goods like concat('%', #{ownerGoods}, '%')</if>
             <if test="orderTimeStart != null  and orderTimeStart != ''"> and order_time >= #{orderTimeStart}</if>
             <if test="orderTimeEnd != null  and orderTimeEnd != ''"> and order_time &lt;= #{orderTimeEnd}</if>
+            <if test="deptId != null and deptId != 0"> and dept_id = #{deptId}</if>
         </where>
         order by id desc
     </select>

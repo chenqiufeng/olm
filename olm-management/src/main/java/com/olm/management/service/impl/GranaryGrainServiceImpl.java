@@ -2,8 +2,12 @@ package com.olm.management.service.impl;
 
 import java.util.List;
 
+import com.olm.common.core.domain.entity.SysDept;
+import com.olm.common.core.domain.model.LoginUser;
+import com.olm.common.utils.SecurityUtils;
 import com.olm.management.domain.Customer;
 import com.olm.management.mapper.CustomerMapper;
+import com.olm.system.mapper.SysDeptMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.olm.management.mapper.GranaryGrainMapper;
@@ -23,7 +27,7 @@ public class GranaryGrainServiceImpl implements IGranaryGrainService
     private GranaryGrainMapper granaryGrainMapper;
 
     @Autowired
-    private CustomerMapper customerMapper;
+    private SysDeptMapper sysDeptMapper;
 
     /**
      * 查询粮仓和粮库对应
@@ -46,10 +50,12 @@ public class GranaryGrainServiceImpl implements IGranaryGrainService
     @Override
     public List<GranaryGrain> selectGranaryGrainList(GranaryGrain granaryGrain)
     {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        granaryGrain.setCustomerId(loginUser.getDeptId());
         List<GranaryGrain> granaryGrainList = granaryGrainMapper.selectGranaryGrainList(granaryGrain);
         for (GranaryGrain granaryGrainTemp: granaryGrainList) {
-            Customer customer = customerMapper.selectCustomerById(granaryGrainTemp.getCustomerId());
-            granaryGrainTemp.setCustomerName(customer.getCompany());
+            SysDept sysDept = sysDeptMapper.selectDeptById(granaryGrainTemp.getCustomerId());
+            granaryGrainTemp.setCustomerName(sysDept.getDeptName());
         }
         return granaryGrainList;
     }

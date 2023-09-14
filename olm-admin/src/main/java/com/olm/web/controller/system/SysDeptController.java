@@ -1,6 +1,9 @@
 package com.olm.web.controller.system;
 
 import java.util.List;
+
+import com.olm.common.core.domain.model.LoginUser;
+import com.olm.common.utils.SecurityUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -130,17 +133,15 @@ public class SysDeptController extends BaseController
         return toAjax(deptService.deleteDeptById(deptId));
     }
 
-    @GetMapping("/listGranary")
+    @GetMapping("/listDeptList")
     public AjaxResult listGranary(SysDept dept)
     {
-        dept.setParentId(0L);
-        List<SysDept> depts = deptService.selectDeptList(dept);
-        return success(depts);
-    }
-
-    @GetMapping("/listGrain")
-    public AjaxResult listGrain(SysDept dept)
-    {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        if (loginUser.getDeptId() == 0) {
+            dept.setParentId(0L);
+        } else {
+            dept.setDeptId(loginUser.getDeptId());
+        }
         List<SysDept> depts = deptService.selectDeptList(dept);
         return success(depts);
     }

@@ -57,6 +57,8 @@ public class StockOutServiceImpl implements IStockOutService {
             String orderTimeEnd = stockOut.getOrderTimeEnd()+  " 23:59:59";
             stockOut.setOrderTimeEnd(orderTimeEnd);
         }
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        stockOut.setDeptId(Integer.valueOf(Math.toIntExact(loginUser.getDeptId())));
         List<StockOut> stockOuts = stockOutMapper.selectStockOutList(stockOut);
         for (StockOut stockOutTemp : stockOuts) {
             GranaryGrain granaryGrain = granaryGrainMapper.selectGranaryGrainById(stockOutTemp.getGrainDepotId());

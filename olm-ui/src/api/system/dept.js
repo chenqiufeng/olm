@@ -50,3 +50,11 @@ export function delDept(deptId) {
     method: 'delete'
   })
 }
+
+export function listDeptList(query) {
+  return request({
+    url: '/system/dept/listDeptList',
+    method: 'get',
+    params: query
+  })
+}

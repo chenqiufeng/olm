@@ -5,9 +5,9 @@
         <el-select v-model="queryParams.customerId" placeholder="请选择客户" clearable  @change="handleCustomer">
           <el-option
             v-for="customer in customerList"
-            :key="customer.id"
-            :label="customer.company"
-            :value="customer.id"
+            :key="customer.deptId"
+            :label="customer.deptName"
+            :value="customer.deptId"
           />
         </el-select>
       </el-form-item>
@@ -85,9 +85,9 @@
           <el-select v-model="form.customerId" placeholder="请选择客户" clearable  @change="handleCustomer">
             <el-option
               v-for="customer in customerList"
-              :key="customer.id"
-              :label="customer.company"
-              :value="customer.id"
+              :key="customer.deptId"
+              :label="customer.deptName"
+              :value="customer.deptId"
             />
           </el-select>
         </el-form-item>
@@ -111,6 +111,7 @@ import { listGranaryGrain, getGranaryGrain, delGranaryGrain, addGranaryGrain, up
 import {listCustomerAll} from "@/api/management/customer";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import {listDeptList} from "@/api/system/dept"
 
 export default {
   name: "GranaryGrain",
@@ -163,7 +164,7 @@ export default {
   methods: {
     // 获取客户列表
     getCustomerList() {
-      listCustomerAll().then(response => {
+      listDeptList().then(response => {
         this.customerList = response.data
       })
     },

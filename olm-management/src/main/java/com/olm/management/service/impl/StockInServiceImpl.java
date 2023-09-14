@@ -58,6 +58,9 @@ public class StockInServiceImpl implements IStockInService {
             String orderTimeEnd = stockIn.getOrderTimeEnd()+  " 23:59:59";
             stockIn.setOrderTimeEnd(orderTimeEnd);
         }
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        stockIn.setDeptId(Integer.valueOf(Math.toIntExact(loginUser.getDeptId())));
+
         List<StockIn> stockIns = stockInMapper.selectStockInList(stockIn);
         for (StockIn stockInTemp : stockIns) {
             GranaryGrain granaryGrain = granaryGrainMapper.selectGranaryGrainById(stockInTemp.getGrainDepotId());
