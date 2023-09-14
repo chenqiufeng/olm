@@ -2,8 +2,10 @@ package com.olm.management.service.impl;
 
 import java.util.List;
 
+import com.olm.common.core.domain.entity.SysDept;
 import com.olm.common.core.domain.model.LoginUser;
 import com.olm.common.utils.SecurityUtils;
+import com.olm.system.mapper.SysDeptMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.olm.management.mapper.CustomerMapper;
@@ -21,6 +23,9 @@ public class CustomerServiceImpl implements ICustomerService
 {
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Autowired
+    private SysDeptMapper sysDeptMapper;
 
     /**
      * 查询客户管理
@@ -57,6 +62,14 @@ public class CustomerServiceImpl implements ICustomerService
     {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         customer.setOpearator(loginUser.getUsername());
+        SysDept dept = new SysDept();
+        dept.setParentId(0L);
+        dept.setDeptName(customer.getCompany());
+        dept.setAncestors("100");
+        dept.setLeader(customer.getName());
+        dept.setPhone(customer.getCellphone());
+        dept.setCreateBy(loginUser.getUsername());
+        sysDeptMapper.insertDept(dept);
         return customerMapper.insertCustomer(customer);
     }
 
